@@ -52,10 +52,11 @@ function requireAdmin(req, res, next) {
 // ================================
 
 const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: process.env.DB_PASSWORD,
-    database: "nexaforge"
+    host: process.env.MYSQLHOST,
+    port: process.env.MYSQLPORT,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE
 });
 
 
