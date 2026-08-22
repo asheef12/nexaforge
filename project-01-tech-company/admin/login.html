@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NexaForge | Admin Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0f172a;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            background-color: #172554;
+            border: 1px solid #263b72;
+            border-radius: 15px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: #94a3b8;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 20px;
+            background-color: #0f172a;
+            color: white;
+            border: 1px solid #334e8c;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #fca311;
+            color: #0f172a;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffb52e;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #f87171;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>NexaForge Admin</h1>
+
+        <p>Sign in to access your messages.</p>
+
+        <form id="loginForm">
+
+            <label for="username">Username</label>
+
+            <input
+                type="text"
+                id="username"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+            <div id="errorMessage" class="error"></div>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const loginForm = document.querySelector("#loginForm");
+        const errorMessage = document.querySelector("#errorMessage");
+
+        loginForm.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const username =
+                document.querySelector("#username").value.trim();
+
+            const password =
+                document.querySelector("#password").value;
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:3000/api/login",
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+
+                    window.location.href = "admin.html";
+
+                } else {
+
+                    errorMessage.textContent =
+                        "Invalid username or password.";
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                errorMessage.textContent =
+                    "Unable to connect to the server.";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
