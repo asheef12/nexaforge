@@ -68,7 +68,7 @@ form.addEventListener("submit", async function (event) {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/api/contact",
+            "https://nexaforge-production.up.railway.app/api/contact",
             {
                 method: "POST",
 
