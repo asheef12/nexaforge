@@ -19,15 +19,28 @@ app.use(cors({
 
 app.use(express.json());
 
+app.set("trust proxy", 1);
+
 app.use(session({
+
     secret: "NexaForge-Admin-Secret-2026",
+
     resave: false,
+
     saveUninitialized: false,
+
     cookie: {
+
         httpOnly: true,
-        secure: false,
+
+        secure: true,
+
+        sameSite: "none",
+
         maxAge: 1000 * 60 * 60
+
     }
+
 }));
 
 // ================================
