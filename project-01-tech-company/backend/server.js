@@ -178,22 +178,23 @@ app.delete("/api/messages/:id", requireAdmin, async (req, res) => {
 // ADMIN LOGIN
 // ================================
 
-app.get("/api/check-admin", (req, res) => {
-    res.json({
-        usernameExists: !!process.env.ADMIN_USERNAME,
-        usernameIsAdmin: process.env.ADMIN_USERNAME === "admin",
-        passwordExists: !!process.env.ADMIN_PASSWORD
-    });
-});
-
 app.post("/api/login", (req, res) => {
 
     const { username, password } = req.body;
 
+    console.log("LOGIN DEBUG:", {
+        receivedUsername: username,
+        receivedPasswordLength: password ? password.length : 0,
+        expectedUsername: process.env.ADMIN_USERNAME,
+        expectedPasswordLength: process.env.ADMIN_PASSWORD
+            ? process.env.ADMIN_PASSWORD.length
+            : 0
+    });
+
     if (
-            username === process.env.ADMIN_USERNAME &&
-            password === process.env.ADMIN_PASSWORD
-        ) {
+        username === process.env.ADMIN_USERNAME &&
+        password === process.env.ADMIN_PASSWORD
+    ) {
 
         req.session.isAdmin = true;
 
