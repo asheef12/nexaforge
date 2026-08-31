@@ -195,14 +195,6 @@ app.post("/api/login", (req, res) => {
 
     const { username, password } = req.body;
 
-    console.log("LOGIN DEBUG:", {
-        receivedUsername: username,
-        receivedPasswordLength: password ? password.length : 0,
-        expectedUsername: process.env.ADMIN_USERNAME,
-        expectedPasswordLength: process.env.ADMIN_PASSWORD
-            ? process.env.ADMIN_PASSWORD.length
-            : 0
-    });
 
     if (
         username === process.env.ADMIN_USERNAME &&
