@@ -178,6 +178,13 @@ app.delete("/api/messages/:id", requireAdmin, async (req, res) => {
 // ADMIN LOGIN
 // ================================
 
+app.get("/api/check-admin", (req, res) => {
+    res.json({
+        usernameExists: !!process.env.ADMIN_USERNAME,
+        passwordExists: !!process.env.ADMIN_PASSWORD
+    });
+});
+
 app.post("/api/login", (req, res) => {
 
     const { username, password } = req.body;
