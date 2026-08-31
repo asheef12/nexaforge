@@ -181,6 +181,7 @@ app.delete("/api/messages/:id", requireAdmin, async (req, res) => {
 app.get("/api/check-admin", (req, res) => {
     res.json({
         usernameExists: !!process.env.ADMIN_USERNAME,
+        usernameIsAdmin: process.env.ADMIN_USERNAME === "admin",
         passwordExists: !!process.env.ADMIN_PASSWORD
     });
 });
