@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
 const session = require("express-session");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -191,14 +192,18 @@ app.delete("/api/messages/:id", requireAdmin, async (req, res) => {
 // ADMIN LOGIN
 // ================================
 
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
 
     const { username, password } = req.body;
 
+    const passwordMatch = await bcrypt.compare(
+        password,
+        process.env.ADMIN_PASSWORD
+    );
 
     if (
         username === process.env.ADMIN_USERNAME &&
-        password === process.env.ADMIN_PASSWORD
+        passwordMatch
     ) {
 
         req.session.isAdmin = true;
